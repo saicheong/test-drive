@@ -1,45 +1,32 @@
 # Credit Origination 
 
 In order to test the credit origination service - we first need to understand
-the data that is required by the service.
+the data required by the service and how it is to be structured.
 
-The service body consist of:
-- application header
-- application
+The data consist of:
+- header
+- body
 
-application consist of
-- card application details
-- financial package
+header specifies identifying information:
+- <todo>
 
-For card application, financial package will be empty (or not applicable?)
-For non-card application, card application details will be empty (or not applicable?)
+body includes (among others)
+- credit 
+- credit details
 
-card application details consist of
-- one or more card application
+credit details consist of
+- one or more facility
+- zero or more security
 
-financial package consist of
-- facilities
-- collaterals
-
-facilities consists of
-- one or more lines
-- zero or more collaterals
+credit specifies:
+- type: unsecured(card), secured(card), unsecured. Optional (may be required for cards)
+- limit. 
+- ccy: base currency used
+- reference no. 
 
 
-To test the service, one approach can be creating separate properties
-based on the kinds of application:
+For card application, there are no further credit details required
+For cashplus application, credit details consist of the cashplus facility details  
+For debt consol application, credit details consist of the term loan facility details
+For other secured application, credit details consist of both line and security details 
 
-Credit Card Application
-Mortgage Application
-Car Finance Application
-Other Application
-
-Credit Card Application - try:
-- financial package is not specified
-- financial package is empty
-- financial contain empty facilties and empty collaterals
-
-Non Credit Card Application - try:
-- card application details is not specified
-- card application details ia empty
-- card application details contain single card application (with default values) 
