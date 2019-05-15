@@ -10,9 +10,10 @@
   (def g gen/generate)
 
   "Generate a min-max tuple that can be used to
-  generate the existing limit and new limit"
+  generate the existing limit and new limit
+  ===================================================="
 
-  "Strategy1: given the existing limit - generate a
+  "Strategy 1: given the existing limit - generate a
   new limit that is higher than existing"
 
   (defn more-than [n]
@@ -54,10 +55,22 @@
 
   (s min-max4 5)
 
-  "Just generate 2 ints representing existing and increment"
+  "Strategy 2: Just generate 2 ints representing existing
+  and increment"
   (s (gen/vector gen/pos-int 2))
 
   (s (gen/tuple gen/pos-int gen/s-pos-int))
+
+
+  "Generate a collection that contain a single LM along
+  with a number of other security "
+
+  (def other-secs (gen/vector (gen/elements [:FD :SS :UT :IN]) 1 3))
+  (def LMs (gen/vector (gen/return :LM) 1 2))
+
+  (g (gen/tuple LMs other-secs))
+  (g (gen/fmap flatten (gen/tuple LMs other-secs)))
+
 
 
   "Generate collections"
