@@ -72,9 +72,27 @@
   (g (gen/fmap flatten (gen/tuple LMs other-secs)))
 
 
-
   "Generate collections"
   (s (gen/vector gen/pos-int))
   (s (gen/not-empty (gen/vector gen/pos-int)))
+
+
+  "Using let
+  ===================================================="
+
+  "Simple expression in let body (no generators)"
+  (s (gen/let [a gen/pos-int
+               c (gen/vector gen/pos-int 3 5)]
+       [(list a c) (map #(* % a) c)]) 5)
+
+  "Using generator result within let binding"
+  (s (gen/let [a gen/pos-int
+               c (gen/fmap #(+ % 3) (gen/return a))]
+       (vector a c)))
+
+  "Using generator in let body"
+  (s (gen/let [a gen/pos-int
+               c (gen/fmap #(+ % 3) (gen/return a))]
+       (gen/tuple (gen/return a) (gen/return c) (gen/choose a c))))
 
 =======)
